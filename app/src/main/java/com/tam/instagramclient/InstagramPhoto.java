@@ -2,6 +2,8 @@ package com.tam.instagramclient;
 
 import android.text.format.DateUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by toan on 3/13/2016.
  */
@@ -15,14 +17,8 @@ public class InstagramPhoto {
     private String profilePicture;
     private String createdAt;
     private int likesCount;
+    private ArrayList<InstagramPhotoComment> comments;
 
-    public int getLikesCount() {
-        return likesCount;
-    }
-
-    public void setLikesCount(int likesCount) {
-        this.likesCount = likesCount;
-    }
 
     public InstagramPhoto() {
         this.userName = "";
@@ -32,6 +28,20 @@ public class InstagramPhoto {
         this.likesContent = 0;
     }
 
+    public ArrayList<InstagramPhotoComment> getComments() {
+        if (comments == null) {
+            comments = new ArrayList<InstagramPhotoComment>();
+        }
+        return comments;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
     public String getCreatedAt() {
         return createdAt;
     }

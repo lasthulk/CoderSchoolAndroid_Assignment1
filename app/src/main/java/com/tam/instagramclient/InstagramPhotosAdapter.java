@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -27,6 +28,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         TextView tvLikesCount;
         ImageView ivPhoto;
         ImageView ivUser;
+        LinearLayout linearComments;
     }
 
     @Override
@@ -41,12 +43,23 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
             viewHolder.ivUser = (ImageView) convertView.findViewById(R.id.ivUser);
             viewHolder.tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAt);
             viewHolder.tvLikesCount = (TextView) convertView.findViewById(R.id.tvLikesCount);
+            viewHolder.linearComments = (LinearLayout) convertView.findViewById(R.id.linearComments);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-//        TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
-//        ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
+//        viewHolder.linearComments.removeAllViews();
+//        ArrayList<InstagramPhotoComment> comments = photo.getComments();
+//        if (!comments.isEmpty()) {
+//            int count = 1;
+//            InstagramPhotoComment comment = null;
+//            for (int i = comments.size(); i >= 0; i--) {
+//                comment = new InstagramPhotoComment();
+//                comment.setUserName(comments.get(i).getUserName());
+//                comment.setText(comments.get(i).getText());
+//            }
+//            View viewComment = viewHolder.linearComments.inflate(getContext(), R.layout.latest_comments_photo, null);
+//        }
         viewHolder.tvCaption.setText(photo.getCaption());
         viewHolder.tvCreatedAt.setText(photo.getCreatedAt());
         viewHolder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));

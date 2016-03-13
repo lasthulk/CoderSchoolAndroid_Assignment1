@@ -36,6 +36,8 @@ public class PhotosActivity extends AppCompatActivity {
                     JSONArray photosJson = response.getJSONArray("data");
                     JSONObject photoJson = null;
                     InstagramPhoto photo = null;
+                    JSONObject commentJson = null;
+                    JSONArray commentsJson = null;
                     photosAdapter.clear();
                     for (int i = 0; i < photosJson.length(); i++) {
                         photoJson = photosJson.getJSONObject(i);
@@ -50,6 +52,18 @@ public class PhotosActivity extends AppCompatActivity {
                         photo.setLikesContent(photoJson.getJSONObject("likes").getInt("count"));
                         photo.setCreatedAt(photoJson.getLong("created_time"));
                         photo.setLikesCount(photoJson.getJSONObject("likes").getInt("count"));
+                        if (photoJson.optJSONObject("comments") != null) {
+                            commentsJson = photoJson.getJSONObject("comments").optJSONArray("data");
+                            if (commentsJson != null) {
+                                for (int j = 0; j < commentsJson.length(); j++) {
+                                    commentJson = commentsJson.getJSONObject(j);
+                                    InstagramPhotoComment comment = new InstagramPhotoComment();
+                                    comment.setText(commentJson.getString("text"));
+                                    photo.getComments().add(comment);
+                                }
+                            }
+                        }
+
                         photos.add(photo);
                     }
                     photosAdapter.notifyDataSetChanged();
