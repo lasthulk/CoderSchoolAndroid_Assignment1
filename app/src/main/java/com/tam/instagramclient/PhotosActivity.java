@@ -1,6 +1,7 @@
 package com.tam.instagramclient;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
@@ -21,19 +22,7 @@ public class PhotosActivity extends AppCompatActivity {
     private final static String CLIENT_ID = "e05c462ebd86446ea48a5af73769b602";
     private ArrayList<InstagramPhoto> photos = null;
     private InstagramPhotosAdapter photosAdapter;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photos);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        photos = new ArrayList<InstagramPhoto>();
-        photosAdapter = new InstagramPhotosAdapter(this, photos);
-        final ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
-        lvPhotos.setAdapter(photosAdapter);
-        fetchPopularPhotos();
-    }
+    private SwipeRefreshLayout swipeContainer = null;
 
     private void fetchPopularPhotos() {
         String url = "https://api.instagram.com/v1/media/popular?client_id=" + CLIENT_ID;
@@ -47,13 +36,13 @@ public class PhotosActivity extends AppCompatActivity {
                     JSONArray photosJson = response.getJSONArray("data");
                     JSONObject photoJson = null;
                     InstagramPhoto photo = null;
-
+                    photosAdapter.clear();
                     for (int i = 0; i < photosJson.length(); i++) {
                         photoJson = photosJson.getJSONObject(i);
                         photo = new InstagramPhoto();
                         photo.setUserName(photoJson.getJSONObject("user").getString("username"));
                         if (photoJson.optJSONObject("caption") != null) {
-                            photo.setCaption(photoJson.getJSONObject("caption").getString("text"));
+                            photo.setCaption(photoJson.getJSONObject("caption").optString("text"));
                         }
                         photo.setImageUrl(photoJson.getJSONObject("images").getJSONObject("standard_resolution").getString("url"));
                         photo.setImageHeight(photoJson.getJSONObject("images").getJSONObject("standard_resolution").getInt("height"));
@@ -73,4 +62,33 @@ public class PhotosActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_photos);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        photos = new ArrayList<InstagramPhoto>();
+        photosAdapter = new InstagramPhotosAdapter(this, photos);
+        final ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
+        lvPhotos.setAdapter(photosAdapter);
+        fetchPopularPhotos();
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchPopularPhotos();
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+    }
+
 }
