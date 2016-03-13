@@ -41,12 +41,15 @@ public class PhotosActivity extends AppCompatActivity {
                         photoJson = photosJson.getJSONObject(i);
                         photo = new InstagramPhoto();
                         photo.setUserName(photoJson.getJSONObject("user").getString("username"));
+                        photo.setProfilePicture(photoJson.getJSONObject("user").getString("profile_picture"));
                         if (photoJson.optJSONObject("caption") != null) {
                             photo.setCaption(photoJson.getJSONObject("caption").optString("text"));
                         }
                         photo.setImageUrl(photoJson.getJSONObject("images").getJSONObject("standard_resolution").getString("url"));
                         photo.setImageHeight(photoJson.getJSONObject("images").getJSONObject("standard_resolution").getInt("height"));
                         photo.setLikesContent(photoJson.getJSONObject("likes").getInt("count"));
+                        photo.setCreatedAt(photoJson.getLong("created_time"));
+                        photo.setLikesCount(photoJson.getJSONObject("likes").getInt("count"));
                         photos.add(photo);
                     }
                     photosAdapter.notifyDataSetChanged();
@@ -70,9 +73,9 @@ public class PhotosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        final ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
         photos = new ArrayList<InstagramPhoto>();
         photosAdapter = new InstagramPhotosAdapter(this, photos);
-        final ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
         lvPhotos.setAdapter(photosAdapter);
         fetchPopularPhotos();
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);

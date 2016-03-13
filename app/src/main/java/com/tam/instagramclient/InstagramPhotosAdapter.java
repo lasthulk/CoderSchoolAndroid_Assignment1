@@ -23,7 +23,10 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 
     private static class ViewHolder {
         TextView tvCaption;
+        TextView tvCreatedAt;
+        TextView tvLikesCount;
         ImageView ivPhoto;
+        ImageView ivUser;
     }
 
     @Override
@@ -35,6 +38,9 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photo, parent, false);
             viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
             viewHolder.ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
+            viewHolder.ivUser = (ImageView) convertView.findViewById(R.id.ivUser);
+            viewHolder.tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAt);
+            viewHolder.tvLikesCount = (TextView) convertView.findViewById(R.id.tvLikesCount);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -42,7 +48,9 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 //        TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
 //        ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
         viewHolder.tvCaption.setText(photo.getCaption());
-        viewHolder.ivPhoto.setImageResource(0);
+        viewHolder.tvCreatedAt.setText(photo.getCreatedAt());
+        viewHolder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));
+        Picasso.with(getContext()).load(photo.getProfilePicture()).into(viewHolder.ivUser);
         Picasso.with(getContext()).load(photo.getImageUrl()).into(viewHolder.ivPhoto);
         return  convertView;
     }

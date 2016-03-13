@@ -1,5 +1,7 @@
 package com.tam.instagramclient;
 
+import android.text.format.DateUtils;
+
 /**
  * Created by toan on 3/13/2016.
  */
@@ -10,6 +12,17 @@ public class InstagramPhoto {
     private String imageUrl;
     private int imageHeight;
     private int likesContent;
+    private String profilePicture;
+    private String createdAt;
+    private int likesCount;
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
 
     public InstagramPhoto() {
         this.userName = "";
@@ -17,6 +30,24 @@ public class InstagramPhoto {
         this.caption = "";
         this.imageHeight = 0;
         this.likesContent = 0;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long longCreatedAt) {
+        String result = DateUtils.getRelativeTimeSpanString(longCreatedAt * 1000,
+                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        this.createdAt = result;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getUserName() {
