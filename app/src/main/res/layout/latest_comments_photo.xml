@@ -2,13 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/linearOneRowComment">
+    android:id="@+id/linearOneRowComment"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:id="@+id/tvCommentUserName"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textStyle="normal|bold"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Small Text"
-        android:id="@+id/tvComment"
-        android:paddingLeft="10dp"
+        android:text="text"
+        android:id="@+id/tvCommentText"
+        android:paddingLeft="5dp"
         android:paddingRight="10dp"
-        android:paddingTop="7dp" />
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" />
 </LinearLayout>

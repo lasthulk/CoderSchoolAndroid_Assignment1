@@ -59,6 +59,7 @@ public class PhotosActivity extends AppCompatActivity {
                                     commentJson = commentsJson.getJSONObject(j);
                                     InstagramPhotoComment comment = new InstagramPhotoComment();
                                     comment.setText(commentJson.getString("text"));
+                                    comment.setUserName(commentJson.getJSONObject("from").getString("username"));
                                     photo.getComments().add(comment);
                                 }
                             }
