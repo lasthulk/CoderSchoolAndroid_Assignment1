@@ -50,8 +50,16 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         viewHolder.tvCaption.setText(photo.getCaption());
         viewHolder.tvCreatedAt.setText(photo.getCreatedAt());
         viewHolder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));
-        Picasso.with(getContext()).load(photo.getProfilePicture()).into(viewHolder.ivUser);
-        Picasso.with(getContext()).load(photo.getImageUrl()).into(viewHolder.ivPhoto);
+        Picasso.with(getContext()).load(photo.getProfilePicture())
+                .resize(50, 50)
+                .centerCrop()
+                .into(viewHolder.ivUser);
+        //Picasso.with(getContext()).load(photo.getImageUrl()).into(viewHolder.ivPhoto);
+        Picasso.with(getContext()).load(photo.getImageUrl())
+
+                .error(R.drawable.error)
+                .placeholder(R.drawable.progress_animation)
+                .into(viewHolder.ivPhoto);
         return  convertView;
     }
 }
