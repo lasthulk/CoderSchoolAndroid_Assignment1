@@ -118,7 +118,6 @@ public class PhotosActivity extends AppCompatActivity {
     }
     public void viewAllComments(View view) {
         int position = (int) view.getTag();
-        //Toast.makeText(this, "pos: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, CommentsActivity.class);
         intent.putExtra(CommentsActivity.PHOTO_POSITION, position);
         startActivity(intent);

@@ -24,4 +24,10 @@ public class CommentsActivity extends AppCompatActivity {
         InstagramCommentsAdapter adapter = new InstagramCommentsAdapter(this, photo.getComments());
         lvAllComments.setAdapter(adapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
 }
