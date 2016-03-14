@@ -26,12 +26,10 @@ public class InstagramPhoto {
         this.caption = "";
         this.imageHeight = 0;
         this.likesContent = 0;
+        comments = new ArrayList<InstagramPhotoComment>();
     }
 
     public ArrayList<InstagramPhotoComment> getComments() {
-        if (comments == null) {
-            comments = new ArrayList<InstagramPhotoComment>();
-        }
         return comments;
     }
 

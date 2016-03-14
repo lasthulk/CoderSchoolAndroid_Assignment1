@@ -28,16 +28,17 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:text="Medium Text"
-            android:id="@+id/userNameTextView"
+            android:id="@+id/tvUsername"
             android:layout_weight="1"
             android:paddingTop="12dp"
             android:paddingLeft="10dp"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:textStyle="normal|bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="Follow"
+            android:text="Time"
             android:id="@+id/tvCreatedAt"
             android:layout_gravity="center"
             android:gravity="center"
@@ -106,12 +107,12 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:id="@+id/imageView11"
+            android:id="@+id/ivHeart"
             android:src="@drawable/blueheart" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Likes"
             android:id="@+id/tvLikesCount"
             android:layout_weight="1"

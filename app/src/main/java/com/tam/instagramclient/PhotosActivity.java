@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class PhotosActivity extends AppCompatActivity {
@@ -22,8 +24,12 @@ public class PhotosActivity extends AppCompatActivity {
     private final static String CLIENT_ID = "e05c462ebd86446ea48a5af73769b602";
     private ArrayList<InstagramPhoto> photos = null;
     private InstagramPhotosAdapter photosAdapter;
-    private SwipeRefreshLayout swipeContainer = null;
 
+    @Bind(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
+
+    @Bind(R.id.lvPhotos)
+    ListView lvPhotos;
     private void fetchPopularPhotos() {
         String url = "https://api.instagram.com/v1/media/popular?client_id=" + CLIENT_ID;
         AsyncHttpClient client = new AsyncHttpClient();
@@ -88,12 +94,17 @@ public class PhotosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        final ListView lvPhotos = (ListView) findViewById(R.id.lvPhotos);
+        ButterKnife.bind(this);
+//        String d1 = DateUtils.getRelativeTimeSpanString(1296656006 * 1000,
+//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+//        String d2 = DateUtils.getRelativeTimeSpanString(1196650000 * 1000,
+//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+//        Toast.makeText(this, "d1: " + d1, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "d2: " + d2, Toast.LENGTH_SHORT).show();
         photos = new ArrayList<InstagramPhoto>();
         photosAdapter = new InstagramPhotosAdapter(this, photos);
         lvPhotos.setAdapter(photosAdapter);
         fetchPopularPhotos();
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
