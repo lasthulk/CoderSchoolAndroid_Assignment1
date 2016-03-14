@@ -24,7 +24,7 @@ The following **optional** features are implemented:
 The following **bonus** features are implemented:
 
 * [x] Allow user to view all comments for an image within a separate activity or dialog fragment
-* [] Allow video posts to be played in full-screen using the VideoView
+* [ ] Allow video posts to be played in full-screen using the VideoView
 * [x] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce boilerplate code.
 
 The following **additional** features are implemented:
@@ -41,7 +41,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Describe any challenges encountered while building the app: Some errors when playing video
 
 ## Open-source libraries used
 
