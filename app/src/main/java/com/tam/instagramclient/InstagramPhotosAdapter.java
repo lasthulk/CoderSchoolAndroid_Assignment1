@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  */
 public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 
-    private final static String INSTAGRAM_COLOR_CODE = "#3f729b";
+    public final static String INSTAGRAM_COLOR_CODE = "#3f729b";
 
     public InstagramPhotosAdapter(Context context, List<InstagramPhoto> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
@@ -62,7 +62,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final InstagramPhoto photo = getItem(position);
+        InstagramPhoto photo = getItem(position);
         PhotoViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photo, parent, false);
@@ -81,14 +81,6 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         holder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));
         AddViewComments(photo, holder);
         DisplayPhotos(photo, holder);
-//        holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Toast.makeText(getContext(), "ImageView clicked", Toast.LENGTH_SHORT).show();
-//
-//                Intent i = new Intent(getContext(), CommentsActivity.class);
-//            }
-//        });
         return  convertView;
     }
 

@@ -1,12 +1,12 @@
 package com.tam.instagramclient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -69,6 +69,7 @@ public class PhotosActivity extends AppCompatActivity {
                                     InstagramPhotoComment comment = new InstagramPhotoComment();
                                     comment.setText(commentJson.getString("text"));
                                     comment.setUserName(commentJson.getJSONObject("from").getString("username"));
+                                    comment.setProfilePicture(commentJson.getJSONObject("from").getString("profile_picture"));
                                     photo.getComments().add(comment);
                                 }
                             }
@@ -93,16 +94,10 @@ public class PhotosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
         ButterKnife.bind(this);
-//        String d1 = DateUtils.getRelativeTimeSpanString(1296656006 * 1000,
-//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-//        String d2 = DateUtils.getRelativeTimeSpanString(1196650000 * 1000,
-//                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-//        Toast.makeText(this, "d1: " + d1, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, "d2: " + d2, Toast.LENGTH_SHORT).show();
         photos = new ArrayList<InstagramPhoto>();
         photosAdapter = new InstagramPhotosAdapter(this, photos);
         lvPhotos.setAdapter(photosAdapter);
@@ -122,7 +117,10 @@ public class PhotosActivity extends AppCompatActivity {
 
     }
     public void viewAllComments(View view) {
-        Toast.makeText(this, "pos: " + String.valueOf(view.getTag()), Toast.LENGTH_SHORT).show();
-
+        int position = (int) view.getTag();
+        //Toast.makeText(this, "pos: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, CommentsActivity.class);
+        intent.putExtra(CommentsActivity.PHOTO_POSITION, position);
+        startActivity(intent);
     }
 }

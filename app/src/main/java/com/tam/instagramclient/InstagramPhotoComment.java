@@ -6,10 +6,19 @@ package com.tam.instagramclient;
 public class InstagramPhotoComment {
     private String text;
     private String userName;
+    private String profilePicture;
 
     public InstagramPhotoComment() {
         this.text = "";
         this.userName = "";
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getText() {
