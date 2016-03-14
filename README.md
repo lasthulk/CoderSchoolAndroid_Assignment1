@@ -1,6 +1,6 @@
-# Project 1 - * Instagram Photo Viewer*
+# Project 1 - *Instagram Photo Viewer*
 
-** Instagram Photo Viewer** is an android app that allows a user to check out popular photos from Instagram. The app utilizes Instagram API to display images and basic image information to the user.
+**Instagram Photo Viewer** is an android app that allows a user to check out popular photos from Instagram. The app utilizes Instagram API to display images and basic image information to the user.
 
 Time spent: **20** hours spent in total
 
@@ -24,7 +24,7 @@ The following **optional** features are implemented:
 The following **bonus** features are implemented:
 
 * [ ] Allow user to view all comments for an image within a separate activity or dialog fragment
-* [ ] Allow video posts to be played in full-screen using the VideoView
+* [x] Allow video posts to be played in full-screen using the VideoView
 * [x] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce boilerplate code.
 
 The following **additional** features are implemented:
