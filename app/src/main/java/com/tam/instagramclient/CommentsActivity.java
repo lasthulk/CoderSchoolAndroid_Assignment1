@@ -18,6 +18,7 @@ public class CommentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
+        setTitle("All comments");
         ButterKnife.bind(this);
         int position = getIntent().getIntExtra(PHOTO_POSITION, 0);
         InstagramPhoto photo = PhotosActivity.photos.get(position);

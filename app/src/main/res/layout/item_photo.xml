@@ -32,8 +32,7 @@
             android:layout_weight="1"
             android:paddingTop="12dp"
             android:paddingLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:textStyle="normal|bold"/>
+            android:layout_gravity="center_vertical"/>
 
         <TextView
             android:layout_width="wrap_content"

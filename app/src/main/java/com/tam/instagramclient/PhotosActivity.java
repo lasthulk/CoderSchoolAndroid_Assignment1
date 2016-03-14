@@ -118,6 +118,10 @@ public class PhotosActivity extends AppCompatActivity {
     }
     public void viewAllComments(View view) {
         int position = (int) view.getTag();
+        int countComments = photos.get(position).getComments().size();
+        if (countComments == 0) {
+            return;
+        }
         Intent intent = new Intent(this, CommentsActivity.class);
         intent.putExtra(CommentsActivity.PHOTO_POSITION, position);
         startActivity(intent);

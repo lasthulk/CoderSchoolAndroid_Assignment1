@@ -34,7 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvItemCommentUserName"
             android:layout_alignLeft="@id/tvItemCommentUserName"
-            android:id="@+id/tvItemCommentText"/>
+            android:id="@+id/tvItemCommentText"
+            android:ellipsize="end"
+            android:maxLines="3" />
     </RelativeLayout>
 
 </RelativeLayout>

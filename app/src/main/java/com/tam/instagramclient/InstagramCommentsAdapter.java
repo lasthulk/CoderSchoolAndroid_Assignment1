@@ -1,7 +1,6 @@
 package com.tam.instagramclient;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,10 +50,9 @@ public class InstagramCommentsAdapter extends ArrayAdapter<InstagramPhotoComment
         } else {
             holder = (CommentViewHolder) convertView.getTag();
         }
-        holder.tvItemCommentText.setText(comment.getText());
-        String userNameFormat = "<b><font color='" + InstagramPhotosAdapter.INSTAGRAM_COLOR_CODE + "'>" + comment.getUserName() + "</font></b>";
-
-        holder.tvItemCommentUserName.setText(Html.fromHtml(userNameFormat));
+        //holder.tvItemCommentText.setText(comment.getText());
+        holder.tvItemCommentText.setText(InstagramUIHelper.formatComment(comment.getText()));
+        holder.tvItemCommentUserName.setText(InstagramUIHelper.formatUserName(comment.getUserName()));
         Picasso.with(getContext()).load(comment.getProfilePicture())
                 .fit()
                 .centerCrop()
