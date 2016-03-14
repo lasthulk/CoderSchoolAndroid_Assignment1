@@ -1,7 +1,13 @@
 package com.tam.instagramclient;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +20,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -75,12 +83,13 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         holder.tvViewAllComments.setTag(position);
         String captionHtmlFormat = "<b><font color='" + INSTAGRAM_COLOR_CODE + "'>" + photo.getUserName() + "</font></b> " + photo.getCaption();
         holder.tvCaption.setText(Html.fromHtml(captionHtmlFormat));
-        String userNameFormat = "<font color='" + INSTAGRAM_COLOR_CODE + "'>" + photo.getUserName() + "</font>";
-        holder.tvUsername.setText(Html.fromHtml(userNameFormat));
+        holder.tvUsername.setText(Html.fromHtml(formatUserName(photo.getUserName())));
         holder.tvCreatedAt.setText(photo.getCreatedAt());
         holder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));
         AddViewComments(photo, holder);
         DisplayPhotos(photo, holder);
+
+
         return  convertView;
     }
 
@@ -97,10 +106,28 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
                 .into(holder.ivPhoto);
     }
 
+    public ArrayList<int[]> getSpans(String body, char prefix) {
+        ArrayList<int[]> spans = new ArrayList<int[]>();
+
+        Pattern pattern = Pattern.compile(prefix + "\\w+");
+        Matcher matcher = pattern.matcher(body);
+
+        // Check all occurrences
+        while (matcher.find()) {
+            int[] currentSpan = new int[2];
+            currentSpan[0] = matcher.start();
+            currentSpan[1] = matcher.end();
+            spans.add(currentSpan);
+        }
+
+        return  spans;
+    }
+
     private void AddViewComments(InstagramPhoto photo, PhotoViewHolder holder) {
         ArrayList<InstagramPhotoComment> comments = photo.getComments();
         if (!comments.isEmpty()) {
             int count = 0;
+
             InstagramPhotoComment comment = null;
             for (int i = comments.size() - 1; i >= 0; i--) {
                 comment = new InstagramPhotoComment();
@@ -108,17 +135,46 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
                 comment.setText(comments.get(i).getText());
                 View viewComment = holder.linearComments.inflate(getContext(), R.layout.latest_comments_photo, null);
                 TextView tvCommentText = (TextView) viewComment.findViewById(R.id.tvCommentText);
-                tvCommentText.setText(comment.getText());
                 TextView tvCommentUserName = (TextView) viewComment.findViewById(R.id.tvCommentUserName);
-                tvCommentUserName.setText(comment.getUserName());
-
-                count++;
+                tvCommentUserName.setText(Html.fromHtml(formatUserName(comment.getUserName())));
+                String commentText = comment.getText();
+                SpannableStringBuilder commentSpan = formatComment(commentText);
+                tvCommentText.setText(commentSpan);
                 holder.linearComments.addView(viewComment);
+                count++;
                 if(count == 2) {
                     break;
                 }
             }
         }
+    }
+
+    private String formatUserName(String userName) {
+        return "<font color='" + INSTAGRAM_COLOR_CODE + "'>" + userName + "</font>";
+    }
+
+    @NonNull
+    private SpannableStringBuilder formatComment(String commentText) {
+        ArrayList<int[]> hashtagSpans = getSpans(commentText, '#');
+        ArrayList<int[]> usertagSpans = getSpans(commentText, '@');
+        SpannableStringBuilder commentSpan = new SpannableStringBuilder(commentText);
+        ForegroundColorSpan colorStyle = new ForegroundColorSpan(Color.parseColor(INSTAGRAM_COLOR_CODE));
+        StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
+        for (int j = 0; j < hashtagSpans.size(); j++) {
+            int[] span = hashtagSpans.get(j);
+            int hashtagStart = span[0];
+            int hashtagEnd = span[1];
+            commentSpan.setSpan(colorStyle, hashtagStart, hashtagEnd, 0);
+            commentSpan.setSpan(boldStyle, hashtagStart, hashtagEnd, 0);
+        }
+        for (int m = 0; m < usertagSpans.size(); m++) {
+            int[] span = usertagSpans.get(m);
+            int usertagStart = span[0];
+            int usertagEnd = span[1];
+            commentSpan.setSpan(colorStyle, usertagStart, usertagEnd, 0);
+            commentSpan.setSpan(boldStyle, usertagStart, usertagEnd, 0);
+        }
+        return commentSpan;
     }
 
 }
