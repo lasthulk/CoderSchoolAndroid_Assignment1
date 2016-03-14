@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -22,7 +24,7 @@ import cz.msebera.android.httpclient.Header;
 public class PhotosActivity extends AppCompatActivity {
     private final static String TAG = "PhotosActivity";
     private final static String CLIENT_ID = "e05c462ebd86446ea48a5af73769b602";
-    private ArrayList<InstagramPhoto> photos = null;
+    public static ArrayList<InstagramPhoto> photos = null;
     private InstagramPhotosAdapter photosAdapter;
 
     @Bind(R.id.swipeContainer)
@@ -30,6 +32,7 @@ public class PhotosActivity extends AppCompatActivity {
 
     @Bind(R.id.lvPhotos)
     ListView lvPhotos;
+
     private void fetchPopularPhotos() {
         String url = "https://api.instagram.com/v1/media/popular?client_id=" + CLIENT_ID;
         AsyncHttpClient client = new AsyncHttpClient();
@@ -70,7 +73,6 @@ public class PhotosActivity extends AppCompatActivity {
                                 }
                             }
                         }
-
                         photos.add(photo);
                     }
                     photosAdapter.notifyDataSetChanged();
@@ -119,5 +121,8 @@ public class PhotosActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
 
     }
+    public void viewAllComments(View view) {
+        Toast.makeText(this, "pos: " + String.valueOf(view.getTag()), Toast.LENGTH_SHORT).show();
 
+    }
 }

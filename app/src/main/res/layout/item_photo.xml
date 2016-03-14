@@ -147,33 +147,27 @@
         android:background="#ffffff"
         android:id="@+id/linearComments">
 
-        <!--<TextView-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Small Text"-->
-            <!--android:id="@+id/captionTextView"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:paddingTop="7dp" />-->
-
-        <!--<TextView-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Small Text"-->
-            <!--android:id="@+id/commentTextView"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:paddingBottom="5dp"-->
-            <!--android:paddingTop="5dp" />-->
-
-        <!--<TextView-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Add comment"-->
-            <!--android:id="@+id/addCommentTextView"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:paddingBottom="20dp" />-->
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#ffffff"
+        android:paddingTop="5dp"
+        android:paddingBottom="3dp"
+        android:id="@+id/linearViewAllComments">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View all comments"
+            android:id="@+id/tvViewAllComments"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:layout_marginBottom="2dp"
+            android:onClick="viewAllComments"/>
+    </LinearLayout>
 </LinearLayout>

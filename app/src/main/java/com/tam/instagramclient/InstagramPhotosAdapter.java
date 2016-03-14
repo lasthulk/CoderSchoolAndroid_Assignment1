@@ -1,6 +1,7 @@
 package com.tam.instagramclient;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import butterknife.ButterKnife;
  * Created by toan on 3/13/2016.
  */
 public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
+
+    private final static String INSTAGRAM_COLOR_CODE = "#3f729b";
 
     public InstagramPhotosAdapter(Context context, List<InstagramPhoto> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
@@ -48,6 +51,10 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
         @Bind(R.id.tvUsername)
         TextView tvUsername;
 
+
+        @Bind(R.id.tvViewAllComments)
+        TextView tvViewAllComments;
+
         public PhotoViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
@@ -55,7 +62,7 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        InstagramPhoto photo = getItem(position);
+        final InstagramPhoto photo = getItem(position);
         PhotoViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photo, parent, false);
@@ -65,7 +72,40 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
             holder = (PhotoViewHolder) convertView.getTag();
             holder.linearComments.removeAllViews();
         }
-//        holder.linearComments.removeAllViews();
+        holder.tvViewAllComments.setTag(position);
+        String captionHtmlFormat = "<b><font color='" + INSTAGRAM_COLOR_CODE + "'>" + photo.getUserName() + "</font></b> " + photo.getCaption();
+        holder.tvCaption.setText(Html.fromHtml(captionHtmlFormat));
+        String userNameFormat = "<font color='" + INSTAGRAM_COLOR_CODE + "'>" + photo.getUserName() + "</font>";
+        holder.tvUsername.setText(Html.fromHtml(userNameFormat));
+        holder.tvCreatedAt.setText(photo.getCreatedAt());
+        holder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));
+        AddViewComments(photo, holder);
+        DisplayPhotos(photo, holder);
+//        holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Toast.makeText(getContext(), "ImageView clicked", Toast.LENGTH_SHORT).show();
+//
+//                Intent i = new Intent(getContext(), CommentsActivity.class);
+//            }
+//        });
+        return  convertView;
+    }
+
+    private void DisplayPhotos(InstagramPhoto photo, PhotoViewHolder holder) {
+        //int width = Math.round(DeviceDimensionsHelper.convertDpToPixel(50, getContext()));
+        Picasso.with(getContext()).load(photo.getProfilePicture())
+                //.resize(width, width)
+                .fit()
+                .centerCrop()
+                .into(holder.ivUser);
+        Picasso.with(getContext()).load(photo.getImageUrl())
+                .error(R.drawable.error)
+                .placeholder(R.drawable.progress_animation)
+                .into(holder.ivPhoto);
+    }
+
+    private void AddViewComments(InstagramPhoto photo, PhotoViewHolder holder) {
         ArrayList<InstagramPhotoComment> comments = photo.getComments();
         if (!comments.isEmpty()) {
             int count = 0;
@@ -87,20 +127,6 @@ public class InstagramPhotosAdapter extends ArrayAdapter<InstagramPhoto> {
                 }
             }
         }
-        holder.tvUsername.setText(photo.getUserName());
-        holder.tvCaption.setText(photo.getCaption());
-        holder.tvCreatedAt.setText(photo.getCreatedAt());
-        holder.tvLikesCount.setText(String.valueOf(photo.getLikesCount()));
-        //int width = Math.round(DeviceDimensionsHelper.convertDpToPixel(50, getContext()));
-        Picasso.with(getContext()).load(photo.getProfilePicture())
-                //.resize(width, width)
-                .fit()
-                .centerCrop()
-                .into(holder.ivUser);
-        Picasso.with(getContext()).load(photo.getImageUrl())
-                .error(R.drawable.error)
-                .placeholder(R.drawable.progress_animation)
-                .into(holder.ivPhoto);
-        return  convertView;
     }
+
 }
