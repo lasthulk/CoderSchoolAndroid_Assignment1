@@ -23,8 +23,8 @@ The following **optional** features are implemented:
 
 The following **bonus** features are implemented:
 
-* [ ] Allow user to view all comments for an image within a separate activity or dialog fragment
-* [x] Allow video posts to be played in full-screen using the VideoView
+* [x] Allow user to view all comments for an image within a separate activity or dialog fragment
+* [] Allow video posts to be played in full-screen using the VideoView
 * [x] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce boilerplate code.
 
 The following **additional** features are implemented:
